@@ -2,27 +2,26 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django import forms
 import uuid
 from .cpfValidation import validate_CPF, validate_CNPJ
-# Create your models here.
 
-class Pessoa(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='dados')
+class PessoaFisica(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='pessoaf')
     foto = models.ImageField(upload_to='thumbpath', blank=True)
-
-class PessoaFisica(Pessoa):
-    cpf = models.CharField(unique=True, max_length=14, validators=[validate_CPF])
-    sexo = models.SmallIntegerField(choices=[(1, 'FEMININO'),(2,'MASCULINO')])
+    cpf = models.CharField(unique=True, max_length=14)
+    sexo = models.SmallIntegerField(choices=[(1, 'FEMININO'),(2,'MASCULINO'),(3,'NÃO DECLARAR')])
 
 class Vaga(models.Model):
     status = models.BooleanField(default=True) #True = disponível.
     descricao = models.TextField()
     prerequisitos = models.TextField()
 
-class PJuridica(Pessoa):
-    cnpj = models.CharField(unique=True, max_length=14, validators=[validate_CNPJ])
-    fk_vaga = models.ForeignKey(Vaga, on_delete=models.CASCADE, related_name='vagas')
+class PJuridica(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='dadospj')
+    foto = models.ImageField(upload_to='thumbpath', blank=True)
+    cnpj = models.CharField(unique=True, max_length=14)# validators=[validate_CNPJ]
+    fk_vaga = models.ForeignKey(Vaga, on_delete=models.CASCADE, related_name='vagas', blank=True)
     ramo = models.CharField(max_length=32)
 
 class TelefonePF(models.Model):
@@ -56,4 +55,4 @@ class PJuridicaProjeto(PessoaProjeto):
 
 class Foto(models.Model):
     nome = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    path = models.CharField(max_length=127)
+    path = models.CharField(max_length=255)

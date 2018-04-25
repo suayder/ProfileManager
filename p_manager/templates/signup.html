@@ -1,0 +1,163 @@
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Cadastro</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
+    </head>
+    <body>
+        <div class="container" hidden>    
+            <form class="form-horizontal" role="form">
+                <h2>Formulário de Cadastro</h2>
+                <div class="form-group">
+                        <label for="firstName" class="col-sm-3 control-label">Nome</label>
+                    <div class="col-sm-9">
+                        <div class="col-xs-8 col-sm-6">
+                            <input type="text" id="firstName" placeholder="Primeiro Nome" class="form-control" autofocus>
+                        </div>
+                        <div class="col-xs-8 col-sm-6">
+                                <input type="text" id="lastName" placeholder="Sobrenome" class="form-control" autofocus>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">Nome para Usuário</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="username" placeholder="Nome Usuário" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-3 control-label">Senha</label>
+                    <div class="col-sm-9">
+                        <input type="password" id="password" placeholder="Senha" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-3 control-label">Repita sua Senha</label>
+                    <div class="col-sm-9">
+                        <input type="password" id="password" placeholder="Senha" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Tipo</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" id="cpfRadio" value="cpf">CPF
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" id="cnpjRadio" value="cnpj">CNPJ
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- /.form-group -->
+                <!--<div class="form-group">
+                    <label for="birthDate" class="col-sm-3 control-label">Data de </label>
+                    <div class="col-sm-9">
+                        <input type="date" id="birthDate" class="form-control">
+                    </div>
+                </div>-->
+                <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">CPF</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="cpfcnpj" class="form-control" placeholder="CPF/CNPJ">
+                    </div>
+                </div>
+                <!--<div class="form-group">
+                    <label for="country" class="col-sm-3 control-label">Country</label>
+                    <div class="col-sm-9">
+                        <select id="country" class="form-control">
+                            <option>Afghanistan</option>
+                            <option>Bahamas</option>
+                            <option>Cambodia</option>
+                            <option>Denmark</option>
+                            <option>Ecuador</option>
+                            <option>Fiji</option>
+                            <option>Gabon</option>
+                            <option>Haiti</option>
+                        </select>
+                    </div>
+                </div> --><!-- /.form-group -->
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Gênero</label>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" id="femaleRadio" value="Female">Feminino
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" id="maleRadio" value="Male">Masculino
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="radio-inline">
+                                    <input type="radio" id="uncknownRadio" value="Unknown">Não&nbsp;Declarar
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- /.form-group -->
+                <!--<div class="form-group">
+                    <label class="control-label col-sm-3">Meal Preference</label>
+                    <div class="col-sm-9">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="calorieCheckbox" value="Low calorie">Low calorie
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="saltCheckbox" value="Low salt">Low salt
+                            </label>
+                        </div>
+                    </div>
+                </div>--> <!-- /.form-group -->
+                <!--<div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox">I accept <a href="#">terms</a>
+                            </label>
+                        </div>
+                    </div>
+                </div> --><!-- /.form-group -->
+                <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                    </div>
+                </div>
+            </form> <!-- /form -->
+        </div> <!-- ./container -->
+    </body>
+</html>
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="row">
+    <div class="col-sm-6">
+
+        {{ user_form.username }}
+
+    </div>
+    <div class="col-sm-6">
+
+            {{ user_form.password1 }}
+
+    </div>
+</div>
+
+
+{{ user_form.as_p }}
+{{ pessoaf_form.as_p }}
+<input type='submit' value='sign_in' />
+</form>

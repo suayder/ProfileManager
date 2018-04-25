@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,5 @@ DATE_INPUT_FORMATS = ('%d/%m/%Y')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (BASE_DIR.child('static'),)
 STATIC_ROOT = BASE_DIR.parent.child('static')
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
