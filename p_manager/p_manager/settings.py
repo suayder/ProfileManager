@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 #.apps.PmanagerConfig
 INSTALLED_APPS = [

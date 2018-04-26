@@ -583,20 +583,19 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-3">Tipo</label>
+                        <label class="control-label col-sm-3">Gênero</label>
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <label class="radio-inline">
-                                        <input type="radio" id="cpfRadio" value="cpf">CPF
-                                    </label>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="radio-inline">
-                                        <input type="radio" id="cnpjRadio" value="cnpj">CNPJ
-                                    </label>
+                                    {% render_field pessoaf_form.sexo class="radio-inline" %}
                                 </div>
                             </div>
+                        </div>
+                    </div> <!-- /.form-group -->
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Tipo</label>
+                        <div class="col-sm-9">
+                            {% render_field pessoa_form.usertype class="radio-inline" %}
                         </div>
                     </div>
                     <div class="form-group">
@@ -606,29 +605,6 @@
                             <!-- <input type="text" name="cpfcnpj" class="form-control" placeholder="CPF/CNPJ"> -->
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Gênero</label>
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {% render_field pessoaf_form.sexo class="radio-inline" %}
-                                    <!-- <label class="radio-inline">
-                                        <input type="radio" id="femaleRadio" value="Female">Feminino
-                                    </label> -->
-                                </div>
-                                <!-- <div class="col-sm-4">
-                                    <label class="radio-inline">
-                                        <input type="radio" id="maleRadio" value="Male">Masculino
-                                    </label>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="radio-inline">
-                                        <input type="radio" id="uncknownRadio" value="Unknown">Não&nbsp;Declarar
-                                    </label>
-                                </div> -->
-                            </div>
-                        </div>
-                    </div> <!-- /.form-group -->
                     <div class="form-group">
                         <div class="col-sm-9 col-sm-offset-3">
                             <button type="submit" class="btn btn-primary btn-block">Registrar</button>
