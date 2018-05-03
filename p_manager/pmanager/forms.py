@@ -11,8 +11,12 @@ class SignUpForm(UserCreationForm):
 class PessoaForm(forms.ModelForm):    
     class Meta:
         model = Pessoa
-        #usertype = forms.ChoiceField(widget=forms.RadioSelect,choices=[(1,'CPF'),(2,'CNPJ')])
         fields = ('usertype',)
+
+class PessoaJuridicaForm(forms.ModelForm):
+    class Meta:
+        model = PJuridica
+        fields = ('cnpj', 'ramo')
 
 class PessoaFisicaForm(forms.ModelForm):
     class Meta:

@@ -9,6 +9,7 @@ class Pessoa(models.Model):
     userInstance = models.OneToOneField(User,on_delete=models.CASCADE, related_name='userinstance')
     usertype = models.SmallIntegerField(choices=[(1,'CPF'),(2,'CNPJ')])
     foto = models.ImageField(upload_to='thumbpath', blank=True)
+    descricao = models.TextField(blank=True)
 
 class PessoaFisica(models.Model):
     usuario = models.OneToOneField(Pessoa, on_delete=models.CASCADE, related_name='pessoaf')
@@ -50,6 +51,12 @@ class PessoaProjeto(models.Model):
     fk_projeto= models.ForeignKey(Projeto, on_delete=models.CASCADE, related_name='fk_projeto')
     fk_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='fk_user')
 
+class Experiencia(models.Model):
+    user = models.ForeignKey(PessoaFisica, on_delete=models.CASCADE, related_name='fk_experienciapf')
+    anoinicio = models.DateField()
+    anofim = models.DateField()
+    instituicao = models.TextField()
+    cidade = models.TextField()
 # class PessoaFisicaProjeto(PessoaProjeto):
 #     fk_pessoa= models.ForeignKey(PessoaFisica, on_delete=models.CASCADE, related_name="fk_pfusuario")
 
