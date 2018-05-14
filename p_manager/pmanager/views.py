@@ -3,26 +3,43 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import TemplateView
 from .models import *
 from .forms import *
 
-def index(request):
-    if(request.method == 'POST'):
-        user_form = SignUpForm(request.POST)
-        pessoa_form = PessoaForm(request.POST)
-        
-        if user_form.is_valid() and pessoa_form.is_valid():
 
-            usr = user_form.save()
-            usrpessoa = pessoa_form.save(commit=False)
-            usrpessoa.user = usr
-            usrpessoa.userInstance_id = usr.pk
-            usrpessoa.save()
+class HomeView(TemplateView):
+    template_name = 'index.html'
 
-            return HttpResponse("Sucesso")
-        else:
-            return render(request, "index.html", { "form": login, "user_form": user_form, "pessoa_form":pessoa_form})
-    return render(request, 'index.html',{ "form": Login(), "user_form": SignUpForm(), "pessoa_form":PessoaForm() })
+    def post(self, request):
+        if(request.method == 'POST'):
+            user_form = SignUpForm(request.POST)
+            pessoa_form = PessoaForm(request.POST)
+            
+            if user_form.is_valid() and pessoa_form.is_valid():
+
+                usr = user_form.save()
+                usrpessoa = pessoa_form.save(commit=False)
+                usrpessoa.user = usr
+                usrpessoa.userInstance_id = usr.pk
+                usrpessoa.save()
+
+                return HttpResponse("Sucesso")
+            else:
+                return render(request, self.template_name, { "form": login, "user_form": user_form, "pessoa_form":pessoa_form})
+
+    def get(self, request):
+
+        userinst = self.getPessoa(user)
+        #print(userInstance.userInstance[1].username)
+
+        args = { "form": Login(), "user_form": SignUpForm(), "pessoa_form":PessoaForm()}
+        return render(request, self.template_name,args)
+    
+    def getPessoa(self, value):
+        if()
+        return Pessoa.objects.get(userInstance_id= value.pk)
+
 
 
 def signup(request):
@@ -80,8 +97,8 @@ def signuppf(request):
             
             return HttpResponse("SUCESSO")
         else:
-            return render(request, "pessoaFisicaForm.html", {"user_form": user_form, "pessoa_form":pessoa_form })
-    return render(request, "pessoaFisicaForm.html", { "user_form": SignUpForm(), "pessoa_form":PessoaFisicaForm() })
+            return render(request, "pessoaFisicaForm.html", {"form": login,"user_form": user_form, "pessoa_form":pessoa_form })
+    return render(request, "pessoaFisicaForm.html", { "form": Login(), "user_form": SignUpForm(), "pessoa_form":PessoaFisicaForm() })
 
 def signuppj(request):
     if(request.method == 'POST'):
@@ -102,5 +119,5 @@ def signuppj(request):
             
             return HttpResponse("SUCESSO")
         else:
-            return render(request, "pessoaJuridicaForm.html", {"user_form": user_form, "pessoa_form":pessoa_form })
-    return render(request, "pessoaJuridicaForm.html", { "user_form": SignUpForm(), "pessoa_form":PessoaJuridicaForm() })
+            return render(request, "pessoaJuridicaForm.html", {"form": login,"user_form": user_form, "pessoa_form":pessoa_form })
+    return render(request, "pessoaJuridicaForm.html", {"form": Login(), "user_form": SignUpForm(), "pessoa_form":PessoaJuridicaForm() })

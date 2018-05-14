@@ -17,10 +17,10 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic.base import TemplateView
 from django.contrib.auth import views as auth_views
-from pmanager import views
+from pmanager.views import HomeView
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('',HomeView.as_view(), name='index'),
     path('pmanager/', include('pmanager.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
