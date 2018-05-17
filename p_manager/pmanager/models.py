@@ -10,6 +10,10 @@ class Pessoa(models.Model):
     usertype = models.SmallIntegerField(choices=[(1,'CPF'),(2,'CNPJ')])
     foto = models.ImageField(upload_to='thumbpath', blank=True)
     descricao = models.TextField(blank=True)
+    mainfunction = models.TextField()
+    organisationalskills = models.SmallIntegerField(blank=True)
+    communicationalskills = models.SmallIntegerField(blank=True)
+    projectmanagmentskills = models.SmallIntegerField(blank=True)
 
 class PessoaFisica(models.Model):
     usuario = models.OneToOneField(Pessoa, on_delete=models.CASCADE, related_name='pessoaf')

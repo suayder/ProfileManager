@@ -30,16 +30,31 @@ class HomeView(TemplateView):
 
     def get(self, request):
 
-        userinst = self.getPessoa(user)
+        if request.user.is_authenticated:
+            print("logged in")
+            args = {"pessoa": Pessoa.objects.get(userInstance_id= request.user.pk)}
+        #userinst = self.getPessoa(user)
         #print(userInstance.userInstance[1].username)
-
-        args = { "form": Login(), "user_form": SignUpForm(), "pessoa_form":PessoaForm()}
+        else:
+            args = { "form": Login(), "user_form": SignUpForm(), "pessoa_form":PessoaForm()}
         return render(request, self.template_name,args)
-    
-    def getPessoa(self, value):
-        if()
-        return Pessoa.objects.get(userInstance_id= value.pk)
 
+
+def editSkills(request):
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            skillsform = SkillsForm(request.POST)
+            obj = Pessoa.objects.get(userInstance_id= request.user.pk)
+            if skillsform.is_valid():
+                obj.organisationalskills = skillsform.cleaned_data['organisationalskills']
+                obj.communicationalskills = skillsform.cleaned_data['communicationalskills']
+                obj.projectmanagmentskills = skillsform.cleaned_data['projectmanagmentskills']
+                obj.save()
+                return HttpResponse("success")
+            else:
+                return HttpResponse("falied")
+        args = {"form": SkillsForm(),"pessoa": Pessoa.objects.get(userInstance_id= request.user.pk)}
+        return render(request,"skillsForm.html", args)
 
 
 def signup(request):

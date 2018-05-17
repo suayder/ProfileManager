@@ -27,3 +27,11 @@ class Login(forms.ModelForm):
      class Meta:
          model = User
          fields = ('username', 'password')
+
+class SkillsForm(forms.Form):
+    organisationalskills = forms.IntegerField()
+    communicationalskills = forms.IntegerField()
+    projectmanagmentskills = forms.IntegerField()
+    """ class Meta:
+        model = Pessoa
+        fields = ('organisationalskills','communicationalskills','projectmanagmentskills') """

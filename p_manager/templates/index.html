@@ -28,17 +28,12 @@
                         <div class="col-sm-8"><h1>{{user.username}}</h1></div>
                         <div class="col-sm-4" ><a href="{% url 'logout' %}" class="btn btn-link" aria-disabled="true"  style="margin-top: 0%; padding-top: 0%">Sair</a></div>
                     </div>
-                    <span class="lead">Marketing Consultant</span>
+                    <span class="lead">{{ pessoa.mainfunction }}</span>
 
                     <div class="about-text">
                         <p>
-                            {{ user.descricao}}
-                            {# userinstance.usertype #}
+                            {{ pessoa.descricao }}
                         </p>
-
-                        <p>Energistically fabricate customized imperatives through cooperative catalysts for change.</p>
-
-
                         <p><img src="{% static 'img/Signature.png' %}" alt="" class="img-responsive"/></p>
                     </div>
 
@@ -76,37 +71,11 @@
                         <div class="progress-wrapper">
 
                             <div class="progress-item">
-                                <span class="progress-title">Marketing</span>
-
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="62" aria-valuemin="0"
-                                        aria-valuemax="100" style="width: 62%"><span class="progress-percent"> 62%</span>
-                                    </div>
-                                </div>
-                                <!-- .progress -->
-                            </div>
-                            <!-- .skill-progress -->
-
-
-                            <div class="progress-item">
-                                <span class="progress-title">Market Research</span>
-
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0"
-                                        aria-valuemax="100" style="width: 90%"><span class="progress-percent"> 90%</span>
-                                    </div>
-                                </div>
-                                <!-- /.progress -->
-                            </div>
-                            <!-- /.skill-progress -->
-
-
-                            <div class="progress-item">
-                                <span class="progress-title">Organisational Skills</span>
+                                <span class="progress-title">Habilidades Organizacionais</span>
 
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                                        aria-valuemax="100" style="width: 75%;"><span class="progress-percent"> 75%</span>
+                                        aria-valuemax="100" style="width: {{pessoa.organisationalskills}}%;"><span class="progress-percent">{{pessoa.organisationalskills}}%</span>
                                     </div>
                                 </div>
                                 <!-- /.progress -->
@@ -114,22 +83,22 @@
                             <!-- /.skill-progress -->
 
                             <div class="progress-item">
-                                <span class="progress-title">Communtcation Skills</span>
+                                <span class="progress-title">Habilidades Comunicacionais</span>
 
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0"
-                                        aria-valuemax="100" style="width: 55%;"><span class="progress-percent"> 55%</span>
+                                        aria-valuemax="100" style="width: {{pessoa.communicationalskills}}%;"><span class="progress-percent"> {{pessoa.communicationalskills}}% </span>
                                     </div>
                                 </div>
                                 <!-- /.progress -->
                             </div>
                             <!-- /.skill-progress -->
                             <div class="progress-item">
-                                <span class="progress-title">Project Management</span>
+                                <span class="progress-title">Gerenciamento de Projetos</span>
 
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="55" aria-valuemin="0"
-                                        aria-valuemax="100" style="width: 80%;"><span class="progress-percent"> 80%</span>
+                                        aria-valuemax="100" style="width: {{pessoa.projectmanagmentskills}}%;"><span class="progress-percent"> {{pessoa.projectmanagmentskills}}%</span>
                                     </div>
                                 </div>
                                 <!-- .progress -->
@@ -142,6 +111,10 @@
                 </div>
                 <!--.row -->
             </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Launch demo modal
+            </button>
+            <div align="right"><a href="{% url 'skillsform' %}" id="edit_skills" class="btn btn-link" aria-disabled="true"  style="margin-top: 0%; padding-top: 0%;font-size: 11px">Editar</a></div>
             <!-- .container-fluid -->
         </section>
         <!-- .skills-wrapper -->
