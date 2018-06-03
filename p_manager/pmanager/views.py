@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, reverse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from .forms import *
 
@@ -32,13 +35,12 @@ class HomeView(TemplateView):
 
         if request.user.is_authenticated:
             print("logged in")
-            args = {"pessoa": Pessoa.objects.get(userInstance_id= request.user.pk)}
-        #userinst = self.getPessoa(user)
-        #print(userInstance.userInstance[1].username)
+            args = {"pessoa": Pessoa.objects.get(userInstance_id= request.user.pk), "experienciaFields":Experiencia.objects.filter(user_id= request.user.pk)}
+            #userinst = self.getPessoa(user)
+            #print(userInstance.userInstance[1].username)
         else:
             args = { "form": Login(), "user_form": SignUpForm(), "pessoa_form":PessoaForm()}
         return render(request, self.template_name,args)
-
 
 def editSkills(request):
     if request.user.is_authenticated:
@@ -50,12 +52,13 @@ def editSkills(request):
                 obj.communicationalskills = skillsform.cleaned_data['communicationalskills']
                 obj.projectmanagmentskills = skillsform.cleaned_data['projectmanagmentskills']
                 obj.save()
-                return HttpResponse("success")
+                return HttpResponseRedirect('/')
             else:
                 return HttpResponse("falied")
-        args = {"form": SkillsForm(),"pessoa": Pessoa.objects.get(userInstance_id= request.user.pk)}
-        return render(request,"skillsForm.html", args)
-
+        context = {"form": SkillsForm(),"pessoa": Pessoa.objects.get(userInstance_id= request.user.pk), }
+        html_form = render_to_string('skillsForm.html',
+        context,request=request,)
+        return JsonResponse({'html_form': html_form})
 
 def signup(request):
 
@@ -79,19 +82,6 @@ def signup(request):
         else:
             return render(request, "signup.html", {"user_form": user_form, "pessoa_form":pessoa_form })
     return render(request, "signup.html", { "user_form": SignUpForm(), "pessoa_form":PessoaFisicaForm() })
-
-# def login_user(request):
-
-#     if(request.method=='POST'):
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         user = authenticate(username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return HttpResponse("Sucess")
-#         else:
-#             return HttpResponse("Something Wrong")
-#     return render(request, "login.html", {"login_form":LoginForm()})
 
 def signuppf(request):
     if(request.method == 'POST'):
@@ -136,3 +126,31 @@ def signuppj(request):
         else:
             return render(request, "pessoaJuridicaForm.html", {"form": login,"user_form": user_form, "pessoa_form":pessoa_form })
     return render(request, "pessoaJuridicaForm.html", {"form": Login(), "user_form": SignUpForm(), "pessoa_form":PessoaJuridicaForm() })
+
+@csrf_exempt
+def experienceForm(request):
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            form = request.POST
+            if request.is_ajax() and request.method == 'PUT':
+                obj = Experiencia.objects.get(user_id= form['id'])
+            else:
+                obj = Experiencia()
+            if form.is_valid():
+                obj.nome = form.cleaned_data['nome']
+                obj.descricao = form.cleaned_data['descricao']
+                obj.anoinicio = form.cleaned_data['anoinicio']
+                obj.anofim = form.cleaned_data['anofim']
+                obj.instituicao = form.cleaned_data['instituicao']
+                obj.cidade = form.cleaned_data['cidade']
+                obj.save()
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponse("falied")
+        if request.is_ajax():
+            context = {"form": ExperienciaForm(), "content":Experiencia.objects.get(user_id= form['id'])}
+        else:
+            context = {"form": ExperienciaForm()}
+        html_form = render_to_string('experienceForm.html',
+        context,request=request,)
+        return JsonResponse({'html_form': html_form})

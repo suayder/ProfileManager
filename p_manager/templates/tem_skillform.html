@@ -1,0 +1,47 @@
+{%block content%}
+<div class="right-col-block blocks">
+    <div class="theiaStickySidebar">
+    
+    <section class="section-wrapper skills-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-title">
+                        <h2>Editar Habilidades</h2>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" method="post" action="{% url 'skillsform' %}" novalidate>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <span class="formgrouptitle">Habilidades Organizacionais</span>
+                            {% render_field form.organisationalskills class="form-control" value=pessoa.organisationalskills %}
+                        </div>
+                        <!-- /.skill-progress -->
+
+                        <div class="form-group">
+                            <span class="formgrouptitle">Habilidades Comunicacionais</span>
+                            {% render_field form.communicationalskills class="form-control" value=pessoa.communicationalskills %}
+                        </div>
+                        <div class="form-group">
+                            <span class="formgrouptitle">Gerenciamento de Projetos</span>
+
+                            {% render_field form.projectmanagmentskills class="form-control" value=pessoa.projectmanagmentskills %}
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- col-md-12 -->
+            </div>
+            <!--.row -->
+        </div>
+        <!-- .container-fluid -->
+    </section>
+    
+
+{%endblock%}

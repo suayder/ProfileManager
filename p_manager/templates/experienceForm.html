@@ -1,0 +1,79 @@
+{% load widget_tweaks %}
+
+
+<!-- Modal Header -->
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">
+        Cadastrar Nova
+    </h4>
+</div>
+
+<!-- Modal Body -->
+<div class="modal-body">
+
+    <form role="form" method="post" action="{% url 'experienceform' %}" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Nome</label>
+
+            <div class="col-sm-9">
+                {% render_field form.nome class="form-control"%}
+            </div>
+        </div>
+        <!-- /.skill-progress -->
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Descrição</label>
+
+            <div class="col-sm-9">
+                {% render_field form.descricao class="form-control" %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Ano Inicio</label>
+
+            <div class="col-sm-3">
+                {% render_field form.anoinicio class="form-control" placeholder="9999" %}
+            </div>
+            <label class="col-sm-2 control-label" style="padding-top: 10px">Ano fim</label>
+
+            <div class="col-sm-4">
+                {% render_field form.anofim class="form-control" placeholder="9999" %}
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Instituição</label>
+
+            <div class="col-sm-9">
+                {% render_field form.instituicao class="form-control"%}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Cidade</label>
+
+            <div class="col-sm-4">
+                {% render_field form.cidade class="form-control" placeholder="Cidade-UF" %}
+            </div>
+            <label class="col-sm-2 control-label" style="padding-top: 10px">País</label>
+
+            <div class="col-sm-3" style="padding-left: 0px !important;">
+                {% render_field form.nacao class="form-control" placeholder="ex: Brasil" %}
+            </div>
+
+        </div>
+
+        <div class="form-group" align = "right" style="padding-right: 15px;">
+            <button id="btn_skillsave" type="submit" class="btn btn-primary">Salvar</button>
+            <button id="btn_skillclose" type="button" class="btn btn-default" data-dismiss="modal" style="padding-top: 10px">Close</button>
+        </div>
+    </form>
+
+</div>

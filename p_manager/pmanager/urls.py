@@ -7,5 +7,6 @@ urlpatterns = [
     path('signuppf', views.signuppf, name='signuppf'),
     path('signuppj', views.signuppj, name='signuppj'),
     path('skillsform', views.editSkills, name='skillsform'),
+    path('experienceform', views.experienceForm, name='experienceform'),
     #path('logout/', auth_views.logout, name='logout'),
     ]
