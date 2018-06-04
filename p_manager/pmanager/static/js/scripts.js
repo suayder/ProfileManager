@@ -34,6 +34,8 @@ $('#edit_skills').on('click', function () {
     });
 });
 
+//------- Experiencia---------------
+
 $('#add_exp').on('click', function () {
     $.ajax({
         type: 'GET',
@@ -48,21 +50,46 @@ $('#add_exp').on('click', function () {
     });
 });
 $('.edit_exp').on('click', function () {
-    console.log($('.edit_exp').attr('id'))
-    $.ajax({
-        type: 'POST',
-        url: 'pmanager/experienceform',
-        data:{id:$('.edit_exp').attr('id')}
-    });
     $.ajax({
         type: 'GET',
         url: 'pmanager/experienceform',
         dataType: 'json',
+        data:{id:$(this).attr('id')},
         beforeSend: function () {
             $("#modal_exp").modal("show");
         },
         success: function (data) {
             $("#modal_exp .modal-content").html(data.html_form);
+        },
+    });
+});
+
+//------- Educação---------------
+
+$('#add_ed').on('click', function () {
+    $.ajax({
+        type: 'GET',
+        url: 'pmanager/educationform',
+        dataType: 'json',
+        beforeSend: function () {
+            $("#modal_ed").modal("show");
+        },
+        success: function (data) {
+            $("#modal_ed .modal-content").html(data.html_form);
+        },
+    });
+});
+$('.edit_ed').on('click', function () {
+    $.ajax({
+        type: 'GET',
+        url: 'pmanager/educationform',
+        dataType: 'json',
+        data:{id:$(this).attr('id')},
+        beforeSend: function () {
+            $("#modal_ed").modal("show");
+        },
+        success: function (data) {
+            $("#modal_ed .modal-content").html(data.html_form);
         },
     });
 });

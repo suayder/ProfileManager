@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import PessoaFisica, PJuridica, Experiencia, Pessoa
+from .models import PessoaFisica, PJuridica, Experiencia, Pessoa, Education
 
 class SignUpForm(UserCreationForm):
     class Meta:
@@ -37,3 +37,8 @@ class ExperienciaForm(forms.ModelForm):
     class Meta:
         model = Experiencia
         fields = ('nome', 'descricao', 'anoinicio', 'anofim', 'instituicao', 'cidade','nacao')
+
+class EducationForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        fields = ('coursename', 'anoinicio', 'anofim', 'instituicao', 'cidade','nacao')

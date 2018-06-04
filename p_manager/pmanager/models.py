@@ -64,6 +64,16 @@ class Experiencia(models.Model):
     instituicao = models.CharField(max_length=512)
     cidade = models.CharField(max_length=512)
     nacao = models.CharField(max_length=256)
+
+class Education(models.Model):
+    
+    coursename = models.CharField(max_length=64, blank=True)
+    eduser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='fk_education')
+    anoinicio = models.PositiveIntegerField(validators=[MaxValueValidator(2018)])
+    anofim = models.PositiveIntegerField()
+    instituicao = models.CharField(max_length=512)
+    cidade = models.CharField(max_length=512)
+    nacao = models.CharField(max_length=256)
 # class PessoaFisicaProjeto(PessoaProjeto):
 #     fk_pessoa= models.ForeignKey(PessoaFisica, on_delete=models.CASCADE, related_name="fk_pfusuario")
 

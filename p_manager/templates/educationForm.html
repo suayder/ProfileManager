@@ -15,28 +15,20 @@
 <!-- Modal Body -->
 <div class="modal-body">
 
-    <form role="form" method="post" action="{% url 'experienceform' %}" novalidate>
+    <form role="form" method="post" action="{% url 'educationform' %}" novalidate>
         {% csrf_token %}
         {% if content.id %}
             <input type="hidden" value="{{content.id}}" name="id">
         {% endif %}
         <div class="form-group">
-            <label class="col-sm-3 control-label">Nome</label>
+            <label class="col-sm-3 control-label">Nome do Curso</label>
 
             <div class="col-sm-9">
-                {% render_field form.nome class="form-control" value=content.nome %}
+                {% render_field form.coursename class="form-control" value=content.coursename %}
             </div>
         </div>
-        <!-- /.skill-progress -->
-
-        <div class="form-group">
-            <label class="col-sm-3 control-label">Descrição</label>
-
-            <div class="col-sm-9">
-                {% render_field form.descricao class="form-control" value=content.descricao %}
-            </div>
-        </div>
-
+            <!-- /.skill-progress -->
+    
         <div class="form-group">
             <label class="col-sm-3 control-label">Ano Inicio</label>
 
@@ -74,8 +66,8 @@
         </div>
 
         <div class="form-group" align = "right" style="padding-right: 15px;">
-            <button id="btn_expsave" type="submit" class="btn btn-primary">Salvar</button>
-            <button id="btn_skillclose" type="button" class="btn btn-default" data-dismiss="modal" style="padding-top: 10px">Close</button>
+            <button id="btn_edsave" type="submit" class="btn btn-primary">Salvar</button>
+            <button id="btn_edclose" type="button" class="btn btn-default" data-dismiss="modal" style="padding-top: 10px">Close</button>
         </div>
     </form>
 
