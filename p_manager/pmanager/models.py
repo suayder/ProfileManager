@@ -5,11 +5,17 @@ from django.dispatch import receiver
 import uuid
 from .cpfValidation import validate_CPF, validate_CNPJ
 from django.core.validators import MaxValueValidator
+import re
+
+def upload_to(instance, filename):
+    st = re.split('\.', filename)
+    t = st[len(st)-1]
+    return "pmanager/{0}.{1}".format(instance.userInstance_id, t)
 
 class Pessoa(models.Model):
     userInstance = models.OneToOneField(User,on_delete=models.CASCADE, related_name='userinstance')
     usertype = models.SmallIntegerField(choices=[(1,'CPF'),(2,'CNPJ')])
-    foto = models.ImageField(upload_to='thumbpath', blank=True)
+    foto = models.ImageField(upload_to=upload_to, default='pmanager/img-profile.jpg')
     descricao = models.TextField(blank=True)
     mainfunction = models.TextField()
     organisationalskills = models.SmallIntegerField(blank=True, default=0)

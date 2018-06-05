@@ -7,6 +7,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView
 from django.views.decorators.csrf import csrf_exempt
+from PIL import Image
 import re
 import json
 from .models import *
@@ -29,7 +30,7 @@ class HomeView(TemplateView):
                 usrpessoa.userInstance_id = usr.pk
                 usrpessoa.save()
 
-                return HttpResponse("Sucesso")
+                return HttpResponseRedirect('/')
             else:
                 return render(request, self.template_name, { "form": login, "user_form": user_form, "pessoa_form":pessoa_form})
 
@@ -37,12 +38,29 @@ class HomeView(TemplateView):
 
         if request.user.is_authenticated:
             print("logged in")
-            args = {"pessoa": Pessoa.objects.get(userInstance_id= request.user.pk), "experienciaFields":Experiencia.objects.filter(user_id= request.user.pk), "educationFields":Education.objects.filter(eduser_id= request.user.pk),"contatoFields":Contato.objects.filter(userct_id= request.user.pk)}
+            args = {"pessoa": Pessoa.objects.get(userInstance_id= request.user.pk), "experienciaFields":Experiencia.objects.filter(user_id= request.user.pk), "educationFields":Education.objects.filter(eduser_id= request.user.pk),"contatoFields":Contato.objects.filter(userct_id= request.user.pk),
+            "avatar":ImageForm()}
             #userinst = self.getPessoa(user)
             #print(userInstance.userInstance[1].username)
         else:
             args = { "form": Login(), "user_form": SignUpForm(), "pessoa_form":PessoaForm()}
         return render(request, self.template_name,args)
+
+def upload_pic(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            instance=Pessoa.objects.get(userInstance_id=request.user.pk)
+            form = ImageForm(request.POST, request.FILES,instance=instance)
+            print('\n\n\n',form.is_valid(),'\n\n\n')
+
+            #st = re.split('\.',request.POST['foto'])
+            #t = st[len(st)-1]
+            if form.is_valid():
+                #form.foto = str(obj.pk)+'.'+t
+                form.save()
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponseRedirect('/')
 
 def editSkills(request):
     if request.user.is_authenticated:
@@ -150,7 +168,7 @@ def experienceForm(request):
                 obj.save()
                 return HttpResponseRedirect('/')
             else:
-                return HttpResponse('falied')
+                return HttpResponse('Falha no preenchimento do usuário')
 
         elif request.method=='DELETE':
             body_unicode = request.body.decode('utf-8')

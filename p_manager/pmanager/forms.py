@@ -47,3 +47,8 @@ class ContatoForm(forms.ModelForm):
     class Meta:
         model=Contato
         fields = ('ddd', 'numero', 'email')
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Pessoa
+        fields = ('foto',)
