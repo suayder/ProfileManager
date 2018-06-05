@@ -64,6 +64,17 @@ $('.edit_exp').on('click', function () {
     });
 });
 
+$('.delete_exp').on('click', function () {
+    console.log($(this).attr('id'))
+    $.ajax({
+        type: 'DELETE',
+        url: 'pmanager/experienceform',
+        dataType: 'json',
+        data:{'id':$(this).attr('id')},
+    });
+    window.location.reload(true);
+});
+
 //------- Educação---------------
 
 $('#add_ed').on('click', function () {
@@ -92,4 +103,54 @@ $('.edit_ed').on('click', function () {
             $("#modal_ed .modal-content").html(data.html_form);
         },
     });
+});
+
+$('.delete_ed').on('click', function () {
+    $.ajax({
+        type: 'DELETE',
+        url: 'pmanager/educationform',
+        dataType: 'json',
+        data:{'id':$(this).attr('id')},
+    });
+    window.location.reload(true);
+});
+
+//------- Contato---------------
+
+$('#add_ct').on('click', function () {
+    $.ajax({
+        type: 'GET',
+        url: 'pmanager/contatoform',
+        dataType: 'json',
+        beforeSend: function () {
+            $("#modal_ct").modal("show");
+        },
+        success: function (data) {
+            $("#modal_ct .modal-content").html(data.html_form);
+        },
+    });
+});
+$('.edit_ct').on('click', function () {
+    $.ajax({
+        type: 'GET',
+        url: 'pmanager/contatoform',
+        dataType: 'json',
+        data:{id:$(this).attr('id')},
+        beforeSend: function () {
+            $("#modal_ct").modal("show");
+        },
+        success: function (data) {
+            $("#modal_ct .modal-content").html(data.html_form);
+        },
+    });
+});
+
+$('.delete_ct').on('click', function () {
+    $.ajax({
+        type: 'DELETE',
+        url: 'pmanager/contatoform',
+        dataType: 'json',
+        data:{'id':$(this).attr('id')},
+    });
+    window.location.reload(true);
 });

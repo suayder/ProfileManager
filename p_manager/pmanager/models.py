@@ -32,10 +32,11 @@ class Vaga(models.Model):
     prerequisitos = models.TextField()
     fk_pjuridica = models.ForeignKey(PJuridica, on_delete=models.CASCADE, related_name='vagas', blank=True)
 
-class Telefone(models.Model):
-    pessoa = models.ForeignKey(User, on_delete=models.CASCADE, related_name='fone')
-    ddd = models.CharField(max_length=2)
+class Contato(models.Model):
+    userct = models.ForeignKey(User, on_delete=models.CASCADE, related_name='contato')
+    ddd = models.CharField(max_length=3)
     numero = models.CharField(max_length=9)
+    email = models.EmailField(blank=True)
 
 # class TelefonePJ(models.Model):
 #     pessoa = models.ForeignKey(PJuridica, on_delete=models.CASCADE, related_name='fone')

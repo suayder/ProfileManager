@@ -6,7 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_exempt
 import re
+import json
 from .models import *
 from .forms import *
 
@@ -35,7 +37,7 @@ class HomeView(TemplateView):
 
         if request.user.is_authenticated:
             print("logged in")
-            args = {"pessoa": Pessoa.objects.get(userInstance_id= request.user.pk), "experienciaFields":Experiencia.objects.filter(user_id= request.user.pk), "educationFields":Education.objects.filter(eduser_id= request.user.pk)}
+            args = {"pessoa": Pessoa.objects.get(userInstance_id= request.user.pk), "experienciaFields":Experiencia.objects.filter(user_id= request.user.pk), "educationFields":Education.objects.filter(eduser_id= request.user.pk),"contatoFields":Contato.objects.filter(userct_id= request.user.pk)}
             #userinst = self.getPessoa(user)
             #print(userInstance.userInstance[1].username)
         else:
@@ -127,6 +129,7 @@ def signuppj(request):
             return render(request, "pessoaJuridicaForm.html", {"form": login,"user_form": user_form, "pessoa_form":pessoa_form })
     return render(request, "pessoaJuridicaForm.html", {"form": Login(), "user_form": SignUpForm(), "pessoa_form":PessoaJuridicaForm() })
 
+@csrf_exempt
 def experienceForm(request):
     if request.user.is_authenticated:
         if request.method=='POST':
@@ -149,6 +152,14 @@ def experienceForm(request):
             else:
                 return HttpResponse('falied')
 
+        elif request.method=='DELETE':
+            body_unicode = request.body.decode('utf-8')
+            try:
+                Experiencia.objects.get(id=int(re.split('=',body_unicode)[1])).delete()
+                return HttpResponseRedirect('/')
+            except:
+                return HttpResponse("Algo errado ao deletar")
+
         form = request.GET
         try:
             context = {"form": ExperienciaForm(), "content":Experiencia.objects.get(id= form['id'])}
@@ -158,6 +169,7 @@ def experienceForm(request):
         context,request=request,)
         return JsonResponse({'html_form': html_form})
 
+@csrf_exempt
 def educationForm(request):
     if request.user.is_authenticated:
         if request.method=='POST':
@@ -178,12 +190,55 @@ def educationForm(request):
                 return HttpResponseRedirect('/')
             else:
                 return HttpResponse('falied')
-
+        elif request.method=='DELETE':
+            body_unicode = request.body.decode('utf-8')
+            try:
+                Education.objects.get(id=int(re.split('=',body_unicode)[1])).delete()
+                return HttpResponseRedirect('/')
+            except:
+                return HttpResponse("Algo errado ao deletar o contato")
         form = request.GET
         try:
             context = {"form": EducationForm(), "content":Education.objects.get(id= form['id'])}
         except:
             context = {"form": EducationForm()}
         html_form = render_to_string('educationForm.html',
+        context,request=request,)
+        return JsonResponse({'html_form': html_form})
+
+@csrf_exempt
+def contatoForm(request):
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            form = ContatoForm(request.POST)
+            try:
+                obj = Contato.objects.get(id=request.POST['id'])
+                print("TRỲ\n\n\n")
+            except:
+                print("EXCEPT\n\n\n")
+                obj = Contato()
+            if form.is_valid():
+                obj.ddd = form.cleaned_data['ddd']
+                obj.numero = form.cleaned_data['numero']
+                obj.email = form.cleaned_data['email']
+                obj.userct_id = request.user.pk
+                obj.save()
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponse('Something Wrong')
+
+        elif request.method=='DELETE':
+            body_unicode = request.body.decode('utf-8')
+            try:
+                Contato.objects.get(id=int(re.split('=',body_unicode)[1])).delete()
+                return HttpResponseRedirect('/')
+            except:
+                return HttpResponse("Algo errado ao deletar o contato")
+        form = request.GET
+        try:
+            context = {"form": ContatoForm(), "content":Contato.objects.get(id= form['id'])}
+        except:
+            context = {"form": ContatoForm()}
+        html_form = render_to_string('contactForm.html',
         context,request=request,)
         return JsonResponse({'html_form': html_form})
